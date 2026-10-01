@@ -1,0 +1,146 @@
+[
+  {
+    "nombreRegla": "Mostrar",
+    "metodo": "revisarMostrar",
+    "descripcion": "Muestra en pantalla el valor de su argumento",
+    "palabras": ["MOSTRAR"]
+  },
+  {
+    "nombreRegla": "SumarDias",
+    "metodo": "revisarSumarDias",
+    "descripcion": "Suma una cantidad de dias calendario a una fecha",
+    "palabras": ["SUMAR_DIAS"]
+  },
+  {
+    "nombreRegla": "RestarDias",
+    "metodo": "revisarRestarDias",
+    "descripcion": "Resta una cantidad de dias calendario a una fecha",
+    "palabras": ["RESTAR_DIAS"]
+  },
+  {
+    "nombreRegla": "DiasEntre",
+    "metodo": "revisarDiasEntre",
+    "descripcion": "Calcula la cantidad de dias entre dos fechas",
+    "palabras": ["DIAS_ENTRE"]
+  },
+  {
+    "nombreRegla": "DiaSemana",
+    "metodo": "revisarDiaSemana",
+    "descripcion": "Indica el dia de la semana correspondiente a una fecha",
+    "palabras": ["DIA_SEMANA"]
+  },
+  {
+    "nombreRegla": "EsBisiesto",
+    "metodo": "revisarEsBisiesto",
+    "descripcion": "Indica si el anio de una fecha es bisiesto",
+    "palabras": ["ES_BISIESTO"]
+  },
+  {
+    "nombreRegla": "Cerrar",
+    "metodo": "revisarCerrar",
+    "descripcion": "Detiene la ejecucion del programa",
+    "palabras": ["CERRAR"]
+  },
+  {
+    "nombreRegla": "DeduccionSalud",
+    "metodo": "revisarDeduccionSalud",
+    "descripcion": "Calcula el 4% de aporte a salud sobre un salario",
+    "palabras": ["DEDUCCION_SALUD"]
+  },
+  {
+    "nombreRegla": "DeduccionPension",
+    "metodo": "revisarDeduccionPension",
+    "descripcion": "Calcula el 4% de aporte a pension sobre un salario",
+    "palabras": ["DEDUCCION_PENSION"]
+  },
+  {
+    "nombreRegla": "DescuentoAusencias",
+    "metodo": "revisarDescuentoAusencias",
+    "descripcion": "Calcula el descuento por dias de ausencia",
+    "palabras": ["DESCUENTO_AUSENCIAS"]
+  },
+  {
+    "nombreRegla": "SalarioNeto",
+    "metodo": "revisarSalarioNeto",
+    "descripcion": "Resta las deducciones al salario bruto",
+    "palabras": ["SALARIO_NETO"]
+  },
+  {
+    "nombreRegla": "CesantiasProporcionales",
+    "metodo": "revisarCesantiasProporcionales",
+    "descripcion": "Calcula las cesantias proporcionales de un periodo trabajado",
+    "palabras": ["CESANTIAS_PROPORCIONALES"]
+  },
+  {
+    "nombreRegla": "InteresesCesantias",
+    "metodo": "revisarInteresesCesantias",
+    "descripcion": "Calcula los intereses (12% anual) sobre las cesantias",
+    "palabras": ["INTERESES_CESANTIAS"]
+  },
+  {
+    "nombreRegla": "PrimaProporcional",
+    "metodo": "revisarPrimaProporcional",
+    "descripcion": "Calcula la prima de servicios proporcional de un periodo",
+    "palabras": ["PRIMA_PROPORCIONAL"]
+  },
+  {
+    "nombreRegla": "VacacionesProporcionales",
+    "metodo": "revisarVacacionesProporcionales",
+    "descripcion": "Calcula las vacaciones proporcionales de un periodo trabajado",
+    "palabras": ["VACACIONES_PROPORCIONALES"]
+  },
+  {
+    "nombreRegla": "FechaPagoQuincena",
+    "metodo": "revisarFechaPagoQuincena",
+    "descripcion": "Indica la fecha de pago de nomina (15 o ultimo dia del mes) segun la fecha dada",
+    "palabras": ["FECHA_PAGO_QUINCENA"]
+  },
+  {
+    "nombreRegla": "DiasRestantesContrato",
+    "metodo": "revisarDiasRestantesContrato",
+    "descripcion": "Calcula cuantos dias faltan para que termine un contrato",
+    "palabras": ["DIAS_RESTANTES_CONTRATO"]
+  },
+  {
+    "nombreRegla": "ValorDia",
+    "metodo": "revisarValorDia",
+    "descripcion": "Calcula el valor de un dia de trabajo a partir del salario mensual",
+    "palabras": ["VALOR_DIA"]
+  },
+  {
+    "nombreRegla": "ValorHora",
+    "metodo": "revisarValorHora",
+    "descripcion": "Calcula el valor de una hora de trabajo a partir del salario mensual",
+    "palabras": ["VALOR_HORA"]
+  },
+  {
+    "nombreRegla": "SalarioProporcional",
+    "metodo": "revisarSalarioProporcional",
+    "descripcion": "Calcula el salario proporcional a los dias calendario de un periodo",
+    "palabras": ["SALARIO_PROPORCIONAL"]
+  },
+  {
+    "nombreRegla": "HoraExtraDiurna",
+    "metodo": "revisarHoraExtraDiurna",
+    "descripcion": "Calcula el valor de horas extra diurnas (recargo del 25%)",
+    "palabras": ["HORA_EXTRA_DIURNA"]
+  },
+  {
+    "nombreRegla": "HoraExtraNocturna",
+    "metodo": "revisarHoraExtraNocturna",
+    "descripcion": "Calcula el valor de horas extra nocturnas (recargo del 75%)",
+    "palabras": ["HORA_EXTRA_NOCTURNA"]
+  },
+  {
+    "nombreRegla": "LiquidarNomina",
+    "metodo": "revisarLiquidarNomina",
+    "descripcion": "Calcula la liquidacion completa de nomina de un periodo: salario proporcional, horas extra, ausencias y deducciones",
+    "palabras": ["LIQUIDAR_NOMINA"]
+  },
+  {
+    "nombreRegla": "LiquidacionFinal",
+    "metodo": "revisarLiquidacionFinal",
+    "descripcion": "Calcula la liquidacion final de un contrato: cesantias, intereses, prima y vacaciones proporcionales pendientes",
+    "palabras": ["LIQUIDACION_FINAL"]
+  }
+]

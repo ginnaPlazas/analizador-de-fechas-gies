@@ -1,0 +1,11 @@
+dias_entre(2026-08-26, 2026/09/25)
+
+valor_dia(1800000)
+
+salario_proporcional(01/09/2026, 30/09/2026, 1800000)
+
+liquidar_nomina(01/09/2026, 30/09/2026, 1800000, 4, 2, 1)
+
+cerrar()
+
+norma 8601

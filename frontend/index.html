@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>GIES - Lenguaje Formal</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="logo-section">
+        <div class="logo">G</div>
+
+        <div>
+            <h1>GIES</h1>
+            <span>Lenguaje Formal</span>
+        </div>
+    </div>
+
+    <div class="status">
+        <span class="status-dot"></span>
+        SERVIDOR ONLINE
+    </div>
+
+</header>
+
+<main class="main-container">
+
+    <section class="editor-panel">
+
+        <div class="panel-header">
+
+            <div>
+                <h2>Terminal GIES</h2>
+                <p>Escribe instrucciones y ejecútalas</p>
+            </div>
+
+            <span class="language-badge">GIES</span>
+
+        </div>
+
+        <div class="editor-container">
+
+            <div class="terminal-chrome">
+
+                <div class="terminal-banner">BIENVENID@ A GIES</div>
+                <div class="terminal-banner-sub">Escribe tu instrucción y presiona Ejecutar</div>
+
+                <div class="terminal-input-line">
+                    <span class="terminal-prompt">GIES&gt;</span>
+
+                    <textarea
+                        id="codigo"
+                        spellcheck="false"
+                        placeholder="sumar_dias(26/08/2026, 30)"
+                    ></textarea>
+                </div>
+
+                <div class="terminal-hints">
+                    <span class="terminal-hints-label">FECHAS</span>
+                    <span class="hint-chip" data-template="sumar_dias(fecha, dias)">sumar_dias</span>
+                    <span class="hint-chip" data-template="restar_dias(fecha, dias)">restar_dias</span>
+                    <span class="hint-chip" data-template="dias_entre(fecha1, fecha2)">dias_entre</span>
+                    <span class="hint-chip" data-template="dia_semana(fecha)">dia_semana</span>
+                    <span class="hint-chip" data-template="es_bisiesto(fecha)">es_bisiesto</span>
+
+                    <span class="terminal-hints-label">NÓMINA Y LIQUIDACIÓN</span>
+                    <span class="hint-chip" data-template="deduccion_salud(salario)">deduccion_salud</span>
+                    <span class="hint-chip" data-template="deduccion_pension(salario)">deduccion_pension</span>
+                    <span class="hint-chip" data-template="descuento_ausencias(dias_ausencia, valor_dia)">descuento_ausencias</span>
+                    <span class="hint-chip" data-template="salario_neto(salario_bruto, deducciones)">salario_neto</span>
+                    <span class="hint-chip" data-template="salario_proporcional(fecha_inicio, fecha_fin, salario_mensual)">salario_proporcional</span>
+                    <span class="hint-chip" data-template="valor_dia(salario_mensual)">valor_dia</span>
+                    <span class="hint-chip" data-template="valor_hora(salario_mensual)">valor_hora</span>
+                    <span class="hint-chip" data-template="hora_extra_diurna(horas, valor_hora)">hora_extra_diurna</span>
+                    <span class="hint-chip" data-template="hora_extra_nocturna(horas, valor_hora)">hora_extra_nocturna</span>
+                    <span class="hint-chip" data-template="cesantias_proporcionales(fecha_inicio, fecha_fin, salario)">cesantias_proporcionales</span>
+                    <span class="hint-chip" data-template="intereses_cesantias(cesantias, fecha_inicio, fecha_fin)">intereses_cesantias</span>
+                    <span class="hint-chip" data-template="prima_proporcional(fecha_inicio, fecha_fin, salario)">prima_proporcional</span>
+                    <span class="hint-chip" data-template="vacaciones_proporcionales(fecha_inicio, fecha_fin, salario)">vacaciones_proporcionales</span>
+                    <span class="hint-chip" data-template="fecha_pago_quincena(fecha)">fecha_pago_quincena</span>
+                    <span class="hint-chip" data-template="dias_restantes_contrato(fecha_actual, fecha_fin)">dias_restantes_contrato</span>
+                    <span class="hint-chip" data-template="liquidar_nomina(fecha_inicio, fecha_fin, salario_mensual, horas_extra_diurnas, horas_extra_nocturnas, dias_ausencia)">liquidar_nomina</span>
+                    <span class="hint-chip" data-template="liquidacion_final(fecha_inicio, fecha_fin, salario_mensual)">liquidacion_final</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="editor-footer">
+
+            <div class="editor-info">
+                <span>●</span>
+                Lenguaje GIES
+            </div>
+
+            <div class="buttons">
+
+                <button id="limpiar" class="btn-clear">
+                    Limpiar
+                </button>
+
+                <button id="ejecutar" class="btn-run">
+                    ▶ Ejecutar
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <aside class="right-panel">
+
+        <section class="console-panel">
+
+            <div class="panel-header">
+                <div>
+                    <h2>Consola</h2>
+                    <p>Resultado de la ejecución</p>
+                </div>
+            </div>
+
+            <div class="console">
+
+                <div class="console-title">
+                    <span class="console-live-dot"></span>
+                    <span class="terminal-name">GIES Console</span>
+                </div>
+
+                <div class="console-content">
+
+                    <div class="console-label">
+                        RESULTADO
+                    </div>
+
+                    <div id="resultado" class="resultado">Aquí aparecerá el resultado.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tokens-panel">
+
+            <div class="panel-header">
+
+                <div>
+                    <h2>Tokens</h2>
+                    <p>Análisis léxico</p>
+                </div>
+                <span class="token-icon">{ }</span>
+            </div>
+            <pre id="tokens">Aquí aparecerán los tokens.</pre>
+        </section>
+    </aside>
+</main>
+
+
+
+
+
+
+<script src="/static/script.js"></script>
+
+
+</body>
+
+</html>

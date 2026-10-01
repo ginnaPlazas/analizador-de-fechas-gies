@@ -1,0 +1,23 @@
+mostrar(dia_semana(07/09/2026))
+
+sumar_dias(26/08/2026, 30)
+
+restar_dias(26/08/2026, 15)
+
+dias_entre(2026-08-26, 2026/09/25)
+
+es_bisiesto(29.02.2028)
+
+valor_dia(1800000)
+
+salario_proporcional(01/09/2026, 30/09/2026, 1800000)
+
+deduccion_salud(1800000)
+
+deduccion_pension(1800000)
+
+descuento_ausencias(2, 60000)
+
+salario_neto(1800000, 144000)
+
+liquidar_nomina(01/09/2026, 30/09/2026, 1800000, 4, 2, 1)
