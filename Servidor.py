@@ -1,11 +1,12 @@
 from fastapi import FastAPI
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import os
 
 from TokenizarFechas import tokenizar
 from Sintactico import AnalizadorSintactico
+from GeneradorPDF import generar_pdf
 
 
 app = FastAPI(
@@ -17,6 +18,11 @@ app = FastAPI(
 
 class CodigoRequest(BaseModel):
     codigo: str
+
+
+class PdfRequest(BaseModel):
+    codigo: str
+    resultado: str
 
 
 ruta_frontend = os.path.join(
@@ -31,7 +37,8 @@ app.mount(
 )
 
 
-@app.get("/")
+# GET para el navegador y HEAD para los chequeos de salud de Render
+@app.api_route("/", methods=["GET", "HEAD"])
 def inicio():
 
     ruta_html = os.path.join(
@@ -80,3 +87,17 @@ def ejecutar_codigo(request: CodigoRequest):
         return {
             "error": str(error)
         }
+
+
+@app.post("/pdf")
+def descargar_pdf(request: PdfRequest):
+
+    contenido = generar_pdf(request.codigo, request.resultado)
+
+    return Response(
+        content=contenido,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": 'attachment; filename="resultado-gies.pdf"'
+        }
+    )

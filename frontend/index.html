@@ -9,6 +9,7 @@
 
 <title>GIES - Lenguaje Formal</title>
 
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%231e3a8a'/%3E%3Ctext x='50' y='72' font-size='64' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3EG%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="/static/style.css">
 
 </head>
@@ -53,7 +54,7 @@
             <div class="terminal-chrome">
 
                 <div class="terminal-banner">BIENVENID@ A GIES</div>
-                <div class="terminal-banner-sub">Escribe tu instrucción y presiona Ejecutar</div>
+                <div class="terminal-banner-sub">Escribe tu instrucción y presiona Enter (↑ repite el último comando)</div>
 
                 <div class="terminal-input-line">
                     <span class="terminal-prompt">GIES&gt;</span>
@@ -67,11 +68,13 @@
 
                 <div class="terminal-hints">
                     <span class="terminal-hints-label">FECHAS</span>
+                    <span class="hint-chip" data-template="mostrar(valor)">mostrar</span>
                     <span class="hint-chip" data-template="sumar_dias(fecha, dias)">sumar_dias</span>
                     <span class="hint-chip" data-template="restar_dias(fecha, dias)">restar_dias</span>
                     <span class="hint-chip" data-template="dias_entre(fecha1, fecha2)">dias_entre</span>
                     <span class="hint-chip" data-template="dia_semana(fecha)">dia_semana</span>
                     <span class="hint-chip" data-template="es_bisiesto(fecha)">es_bisiesto</span>
+                    <span class="hint-chip" data-template="cerrar()">cerrar</span>
 
                     <span class="terminal-hints-label">NÓMINA Y LIQUIDACIÓN</span>
                     <span class="hint-chip" data-template="deduccion_salud(salario)">deduccion_salud</span>
@@ -129,6 +132,7 @@
                     <h2>Consola</h2>
                     <p>Resultado de la ejecución</p>
                 </div>
+                <span class="console-icon">⌘</span>
             </div>
 
             <div class="console">
@@ -145,6 +149,8 @@
                     </div>
 
                     <div id="resultado" class="resultado">Aquí aparecerá el resultado.</div>
+
+                    <button id="descargar" class="btn-pdf" disabled>⬇ Descargar PDF</button>
                 </div>
             </div>
         </section>

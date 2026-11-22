@@ -9,6 +9,7 @@ COPY TokenizarFechas.py .
 COPY GestorReglas.py .
 COPY reglas.json .
 COPY Servidor.py .
+COPY GeneradorPDF.py .
 COPY requirements.txt .
 
 COPY frontend ./frontend
