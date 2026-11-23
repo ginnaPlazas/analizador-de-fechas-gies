@@ -731,3 +731,178 @@ border-color: #4ade80;
 opacity: 0.35;
 cursor: not-allowed;
 }
+
+/* ================================
+DIÁLOGO DEL INFORME
+================================ */
+
+.dialogo {
+border: none;
+border-radius: 14px;
+padding: 0;
+
+width: min(660px, 94vw);
+
+box-shadow: 0 20px 60px rgba(15, 23, 42, 0.35);
+
+color: #1e293b;
+}
+
+.dialogo::backdrop {
+background: rgba(15, 23, 42, 0.55);
+}
+
+.dialogo-contenido {
+padding: 24px 26px;
+}
+
+.dialogo h3 {
+font-size: 19px;
+color: #172554;
+}
+
+.dialogo-sub {
+margin: 4px 0 18px;
+font-size: 13px;
+color: #64748b;
+}
+
+.campos {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 12px 14px;
+}
+
+.campo {
+display: flex;
+flex-direction: column;
+gap: 5px;
+
+font-size: 11px;
+font-weight: 700;
+letter-spacing: 0.4px;
+color: #64748b;
+}
+
+.campo-ancho {
+grid-column: 1 / -1;
+}
+
+.campo input,
+.campo select {
+padding: 9px 11px;
+
+border: 1px solid #cbd5e1;
+border-radius: 7px;
+
+font-size: 14px;
+font-family: inherit;
+font-weight: 400;
+letter-spacing: 0;
+color: #1e293b;
+
+background: white;
+}
+
+.campo input:focus,
+.campo select:focus {
+outline: none;
+border-color: #2563eb;
+box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.dialogo-ops-titulo {
+display: flex;
+justify-content: space-between;
+align-items: center;
+
+margin: 20px 0 8px;
+
+font-size: 12px;
+font-weight: 700;
+letter-spacing: 0.4px;
+color: #64748b;
+}
+
+.btn-link {
+background: none;
+padding: 2px 4px;
+
+font-size: 12px;
+color: #dc2626;
+}
+
+.btn-link:hover {
+text-decoration: underline;
+}
+
+.lista-ops {
+max-height: 190px;
+overflow-y: auto;
+
+border: 1px solid #e2e8f0;
+border-radius: 8px;
+}
+
+.op-item {
+display: flex;
+align-items: center;
+gap: 10px;
+
+padding: 9px 12px;
+
+border-bottom: 1px solid #f1f5f9;
+
+font-size: 12px;
+
+cursor: pointer;
+}
+
+.op-item:last-child {
+border-bottom: none;
+}
+
+.op-item:hover {
+background: #f8fafc;
+}
+
+.op-codigo {
+flex: 1;
+
+font-family: Consolas, monospace;
+color: #1e293b;
+
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+
+.op-resumen {
+color: #16a34a;
+font-family: Consolas, monospace;
+white-space: nowrap;
+}
+
+.inf-error {
+min-height: 18px;
+margin-top: 10px;
+
+font-size: 12px;
+color: #dc2626;
+}
+
+.dialogo-botones {
+display: flex;
+justify-content: flex-end;
+gap: 10px;
+
+margin-top: 6px;
+}
+
+@media (max-width: 600px) {
+
+.campos {
+    grid-template-columns: 1fr;
+}
+
+}

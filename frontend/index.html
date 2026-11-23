@@ -150,7 +150,7 @@
 
                     <div id="resultado" class="resultado">Aquí aparecerá el resultado.</div>
 
-                    <button id="descargar" class="btn-pdf" disabled>⬇ Descargar PDF</button>
+                    <button id="descargar" class="btn-pdf" disabled>📄 Generar informe</button>
                 </div>
             </div>
         </section>
@@ -174,6 +174,72 @@
 
 
 
+
+<dialog id="dialogo-informe" class="dialogo">
+
+    <div class="dialogo-contenido">
+
+        <h3>Generar informe PDF</h3>
+        <p class="dialogo-sub">Completa los datos del empleado para el encabezado del informe.</p>
+
+        <div class="campos">
+
+            <label class="campo campo-ancho">
+                Nombre completo *
+                <input id="inf-nombre" type="text" maxlength="60" autocomplete="off">
+            </label>
+
+            <label class="campo">
+                Tipo de documento
+                <select id="inf-tipo">
+                    <option>CC</option>
+                    <option>CE</option>
+                    <option>TI</option>
+                    <option>PEP</option>
+                    <option>PPT</option>
+                    <option>Pasaporte</option>
+                </select>
+            </label>
+
+            <label class="campo">
+                Número de documento *
+                <input id="inf-documento" type="text" maxlength="20" autocomplete="off">
+            </label>
+
+            <label class="campo">
+                Cargo
+                <input id="inf-cargo" type="text" maxlength="50" autocomplete="off">
+            </label>
+
+            <label class="campo">
+                Empresa
+                <input id="inf-empresa" type="text" maxlength="60" autocomplete="off">
+            </label>
+
+            <label class="campo">
+                NIT de la empresa
+                <input id="inf-nit" type="text" maxlength="20" autocomplete="off">
+            </label>
+
+        </div>
+
+        <div class="dialogo-ops-titulo">
+            <span>Operaciones a incluir</span>
+            <button id="vaciar-sesion" type="button" class="btn-link">Vaciar historial</button>
+        </div>
+
+        <div id="lista-ops" class="lista-ops"></div>
+
+        <p id="inf-error" class="inf-error"></p>
+
+        <div class="dialogo-botones">
+            <button id="inf-cancelar" type="button" class="btn-clear">Cancelar</button>
+            <button id="inf-descargar" type="button" class="btn-run">⬇ Descargar informe</button>
+        </div>
+
+    </div>
+
+</dialog>
 
 <script src="/static/script.js"></script>
 

@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -20,9 +20,23 @@ class CodigoRequest(BaseModel):
     codigo: str
 
 
-class PdfRequest(BaseModel):
+class Empleado(BaseModel):
+    nombre: str
+    tipo_documento: str = "CC"
+    numero_documento: str
+    cargo: str = ""
+    empresa: str = ""
+    nit: str = ""
+
+
+class Operacion(BaseModel):
     codigo: str
     resultado: str
+
+
+class InformeRequest(BaseModel):
+    empleado: Empleado
+    operaciones: list[Operacion]
 
 
 ruta_frontend = os.path.join(
@@ -90,14 +104,29 @@ def ejecutar_codigo(request: CodigoRequest):
 
 
 @app.post("/pdf")
-def descargar_pdf(request: PdfRequest):
+def descargar_informe(request: InformeRequest):
 
-    contenido = generar_pdf(request.codigo, request.resultado)
+    if not request.empleado.nombre.strip():
+        raise HTTPException(status_code=400, detail="Falta el nombre del empleado")
+
+    if not request.empleado.numero_documento.strip():
+        raise HTTPException(status_code=400, detail="Falta el numero de documento")
+
+    if not request.operaciones:
+        raise HTTPException(status_code=400, detail="No hay operaciones para el informe")
+
+    if len(request.operaciones) > 100:
+        raise HTTPException(status_code=400, detail="Maximo 100 operaciones por informe")
+
+    contenido = generar_pdf(
+        request.empleado.model_dump(),
+        [operacion.model_dump() for operacion in request.operaciones]
+    )
 
     return Response(
         content=contenido,
         media_type="application/pdf",
         headers={
-            "Content-Disposition": 'attachment; filename="resultado-gies.pdf"'
+            "Content-Disposition": 'attachment; filename="informe-gies.pdf"'
         }
     )

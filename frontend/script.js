@@ -1,18 +1,40 @@
 const codigo = document.getElementById("codigo");
 const botonEjecutar = document.getElementById("ejecutar");
 const botonLimpiar = document.getElementById("limpiar");
-const botonPdf = document.getElementById("descargar");
+const botonInforme = document.getElementById("descargar");
 
 const resultado = document.getElementById("resultado");
 const tokens = document.getElementById("tokens");
 
-// Última ejecución exitosa (la usa el botón de PDF)
-let ultimoCodigo = "";
-let ultimoResultado = "";
+// Elementos del diálogo del informe
+const dialogo = document.getElementById("dialogo-informe");
+const listaOps = document.getElementById("lista-ops");
+const infError = document.getElementById("inf-error");
+const campos = {
+    nombre: document.getElementById("inf-nombre"),
+    tipo_documento: document.getElementById("inf-tipo"),
+    numero_documento: document.getElementById("inf-documento"),
+    cargo: document.getElementById("inf-cargo"),
+    empresa: document.getElementById("inf-empresa"),
+    nit: document.getElementById("inf-nit")
+};
+
+// Operaciones exitosas de la sesión: es lo que se incluye en el informe
+const sesion = [];
 
 // Historial de comandos (flecha arriba / abajo)
 const historial = [];
 let indiceHistorial = 0;
+
+
+function actualizarBotonInforme() {
+
+    botonInforme.disabled = sesion.length === 0;
+
+    botonInforme.textContent = sesion.length > 0
+        ? "📄 Generar informe (" + sesion.length + ")"
+        : "📄 Generar informe";
+}
 
 
 async function ejecutar() {
@@ -22,7 +44,6 @@ async function ejecutar() {
     if (!texto) {
         resultado.textContent = "No se ingresó código.";
         tokens.textContent = "";
-        botonPdf.disabled = true;
         return;
     }
 
@@ -34,7 +55,6 @@ async function ejecutar() {
 
     resultado.textContent = "Ejecutando...";
     tokens.textContent = "";
-    botonPdf.disabled = true;
 
     try {
 
@@ -68,9 +88,12 @@ async function ejecutar() {
         tokens.textContent =
             JSON.stringify(datos.tokens, null, 2);
 
-        ultimoCodigo = texto;
-        ultimoResultado = resultado.textContent;
-        botonPdf.disabled = false;
+        // Se agrega a la sesión (sin repetir exactamente la misma operación seguida)
+        const ultima = sesion[sesion.length - 1];
+        if (!ultima || ultima.codigo !== texto || ultima.resultado !== resultado.textContent) {
+            sesion.push({ codigo: texto, resultado: resultado.textContent });
+        }
+        actualizarBotonInforme();
 
     } catch (error) {
 
@@ -82,9 +105,107 @@ async function ejecutar() {
 }
 
 
-async function descargarPdf() {
+// ------------------------------------------------------------
+// Informe PDF
+// ------------------------------------------------------------
 
-    botonPdf.disabled = true;
+function leerDatosGuardados() {
+    try {
+        return JSON.parse(localStorage.getItem("gies_empleado")) || {};
+    } catch (error) {
+        return {};
+    }
+}
+
+function guardarDatos(datos) {
+    try {
+        localStorage.setItem("gies_empleado", JSON.stringify(datos));
+    } catch (error) {
+        // Sin almacenamiento disponible: simplemente no se recuerdan los datos
+    }
+}
+
+function dibujarListaOperaciones() {
+
+    listaOps.textContent = "";
+
+    if (sesion.length === 0) {
+        const vacio = document.createElement("div");
+        vacio.className = "op-item";
+        vacio.textContent = "Todavía no hay operaciones. Ejecuta alguna y vuelve a abrir el informe.";
+        listaOps.appendChild(vacio);
+        return;
+    }
+
+    sesion.forEach((op, indice) => {
+
+        const fila = document.createElement("label");
+        fila.className = "op-item";
+
+        const marca = document.createElement("input");
+        marca.type = "checkbox";
+        marca.checked = true;
+        marca.dataset.indice = String(indice);
+
+        const comando = document.createElement("span");
+        comando.className = "op-codigo";
+        comando.textContent = (indice + 1) + ". " + op.codigo;
+        comando.title = op.codigo;
+
+        const resumen = document.createElement("span");
+        resumen.className = "op-resumen";
+        resumen.textContent = op.resultado.split("\n")[0].slice(0, 28);
+
+        fila.append(marca, comando, resumen);
+        listaOps.appendChild(fila);
+    });
+}
+
+function abrirDialogo() {
+
+    const guardados = leerDatosGuardados();
+
+    Object.keys(campos).forEach((clave) => {
+        if (guardados[clave]) {
+            campos[clave].value = guardados[clave];
+        }
+    });
+
+    infError.textContent = "";
+    dibujarListaOperaciones();
+    dialogo.showModal();
+}
+
+async function descargarInforme() {
+
+    const empleado = {};
+    Object.keys(campos).forEach((clave) => {
+        empleado[clave] = campos[clave].value.trim();
+    });
+
+    if (!empleado.nombre) {
+        infError.textContent = "Escribe el nombre completo del empleado.";
+        campos.nombre.focus();
+        return;
+    }
+
+    if (!empleado.numero_documento) {
+        infError.textContent = "Escribe el número de documento.";
+        campos.numero_documento.focus();
+        return;
+    }
+
+    const seleccionadas = Array.from(
+        listaOps.querySelectorAll("input[type=checkbox]:checked")
+    ).map((marca) => sesion[Number(marca.dataset.indice)]);
+
+    if (seleccionadas.length === 0) {
+        infError.textContent = "Selecciona al menos una operación para el informe.";
+        return;
+    }
+
+    infError.textContent = "";
+    guardarDatos(empleado);
 
     try {
 
@@ -96,13 +217,14 @@ async function descargarPdf() {
             },
 
             body: JSON.stringify({
-                codigo: ultimoCodigo,
-                resultado: ultimoResultado
+                empleado: empleado,
+                operaciones: seleccionadas
             })
         });
 
         if (!respuesta.ok) {
-            throw new Error("El servidor no pudo generar el PDF.");
+            const detalle = await respuesta.json().catch(() => ({}));
+            throw new Error(detalle.detail || "El servidor no pudo generar el informe.");
         }
 
         const archivo = await respuesta.blob();
@@ -110,25 +232,31 @@ async function descargarPdf() {
 
         const enlace = document.createElement("a");
         enlace.href = url;
-        enlace.download = "resultado-gies.pdf";
+        enlace.download = "informe-gies.pdf";
         enlace.click();
 
         URL.revokeObjectURL(url);
 
+        dialogo.close();
+
     } catch (error) {
 
-        resultado.textContent = "No se pudo descargar el PDF: " + error.message;
-
-    } finally {
-
-        botonPdf.disabled = false;
+        infError.textContent = "No se pudo generar el informe: " + error.message;
     }
 }
 
 
 botonEjecutar.addEventListener("click", ejecutar);
 
-botonPdf.addEventListener("click", descargarPdf);
+botonInforme.addEventListener("click", abrirDialogo);
+document.getElementById("inf-descargar").addEventListener("click", descargarInforme);
+document.getElementById("inf-cancelar").addEventListener("click", () => dialogo.close());
+
+document.getElementById("vaciar-sesion").addEventListener("click", () => {
+    sesion.length = 0;
+    actualizarBotonInforme();
+    dibujarListaOperaciones();
+});
 
 // Enter ejecuta (Shift+Enter hace salto de línea).
 // Flechas ↑/↓ recorren el historial cuando el comando es de una sola línea.
@@ -179,6 +307,8 @@ document.querySelectorAll(".hint-chip").forEach((chip) => {
 });
 
 
+// "Limpiar" limpia la pantalla, pero NO borra la sesión del informe
+// (para no perder las operaciones por accidente; eso se hace con "Vaciar historial").
 botonLimpiar.addEventListener("click", () => {
 
     codigo.value = "";
@@ -186,6 +316,4 @@ botonLimpiar.addEventListener("click", () => {
     resultado.textContent = "Aquí aparecerá el resultado.";
 
     tokens.textContent = "Aquí aparecerán los tokens.";
-
-    botonPdf.disabled = true;
 });
